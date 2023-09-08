@@ -1,4 +1,3 @@
-# Template
 #include <bits/stdc++.h>
 using namespace std;
 #define FPT_5G_8$_per_month ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
@@ -11,10 +10,9 @@ using namespace std;
 #define se second
 vector<pii > WASD={{-1,0}, {0,-1}, {0,1}, {1,0}};
 // moi moi moi moi moi moi moi
-const int N=21;
-ll n,m,K,a[N][N],dp[N*N][1<<10];
-vector<vector<pii> > ke;
-priority_queue<pii,vector<pii>,greater<pii> > q;
+const int N=100011;
+ll n, a[N];
+priority_queue<pii,vector<pii>,greater<pii> > qu;
 // =========> <3 Han Han <3 <=======
 int main()
 {
