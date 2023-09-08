@@ -5,7 +5,7 @@ using namespace std;
 #define pii pair<ll, ll >
 #define pip pair<ll, pii>
 #define oo 1e9
-#define oo+ 1e18
+#define ooo 1e18
 #define fi first
 #define se second
 vector<pii > WASD={{-1,0}, {0,-1}, {0,1}, {1,0}};
