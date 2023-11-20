@@ -91,10 +91,11 @@ using namespace std;
 #define fi first
 #define se second
 #define pri_qu priority_queue
-vector<pii> WASD={{-1,0}, {0,-1}, {0,1}, {1,0}};
-vector<pii> wasd={{-1,0}, {0,-1}, {0,1}, {1,0}, {-1,-1}, {-1,1}, {1,-1}, {1,-1}};
-pri_qu<pii,vector<pii>,greater<pii>> pq;
 #define vt vector
+vt<pii> WASD={{-1,0}, {0,-1}, {0,1}, {1,0}};
+vt<pii> wasd={{-1,0}, {0,-1}, {0,1}, {1,0}, {-1,-1}, {-1,1}, {1,-1}, {1,1}};
+vt<string> step ={"U", "L", "R", "D", "LU", "RU", "LD", "RD"};
+pri_qu<pii,vt<pii>,greater<pii>> pq;
 #define pb push_back
 const int N=3e5+10;
 // =========> <3 Han Han <3 <=======
@@ -104,7 +105,7 @@ int main()
     FPTU;
     freopen("inp.txt", "r", stdin);
     freopen("out.txt", "w", stdout);
-    
+
     return 0;
 }
 // Gitchee gitchee goo means that I love you
