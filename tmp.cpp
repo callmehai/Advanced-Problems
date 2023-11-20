@@ -91,13 +91,14 @@ using namespace std;
 #define fi first
 #define se second
 #define pri_qu priority_queue
-vector<pii > WASD={{-1,0}, {0,-1}, {0,1}, {1,0}};
+vector<pii> WASD={{-1,0}, {0,-1}, {0,1}, {1,0}};
+vector<pii> wasd={{-1,0}, {0,-1}, {0,1}, {1,0}, {-1,-1}, {-1,1}, {1,-1}, {1,-1}};
 pri_qu<pii,vector<pii>,greater<pii>> pq;
-const int N=25;
-ll n, m;
-pii b[N];
-bool vis[N][N];
+#define vt vector
+#define pb push_back
+const int N=3e5+10;
 // =========> <3 Han Han <3 <=======
+
 int main()
 {
     FPTU;
