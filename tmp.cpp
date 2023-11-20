@@ -85,7 +85,7 @@ using namespace std;
 #define pip pair<int,pii>
 #define ll long long
 #define pll pair<ll,ll>
-#define plp pair<ll,pair<ll,pii>>
+#define plp pair<ll,pll>
 #define oo 1000111000
 #define ooo 1000111000111000111
 #define fi first
@@ -95,10 +95,12 @@ using namespace std;
 vt<pii> WASD={{-1,0}, {0,-1}, {0,1}, {1,0}};
 vt<pii> wasd={{-1,0}, {0,-1}, {0,1}, {1,0}, {-1,-1}, {-1,1}, {1,-1}, {1,1}};
 vt<string> step ={"U", "L", "R", "D", "LU", "RU", "LD", "RD"};
-pri_qu<pii,vt<pii>,greater<pii>> pq;
+pri_qu<pll,vt<pll>,greater<pll>> pq;
 #define pb push_back
-const int N=3e5+10;
+const int N=1111;
+const int M=10;
 // =========> <3 Han Han <3 <=======
+
 
 int main()
 {
