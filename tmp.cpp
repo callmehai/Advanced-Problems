@@ -81,14 +81,18 @@
 using namespace std;
 // ************ start coding ************
 #define FPTU ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define pii pair<int,int>
+#define pip pair<int,pii>
 #define ll long long
-#define pii pair<ll, ll >
-#define pip pair<ll, pair<ll,pii> >
+#define pll pair<ll,ll>
+#define plp pair<ll,pair<ll,pii>>
 #define oo 1000111000
 #define ooo 1000111000111000111
 #define fi first
 #define se second
+#define pri_qu priority_queue
 vector<pii > WASD={{-1,0}, {0,-1}, {0,1}, {1,0}};
+pri_qu<pii,vector<pii>,greater<pii>> pq;
 const int N=25;
 ll n, m;
 pii b[N];
