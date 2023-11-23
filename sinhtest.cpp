@@ -80,13 +80,29 @@
 // #include<bits/stdc++.h>
 using namespace std;
 // ************ start coding ************
-const int N=2e6+5;
+#define FPTU ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 #define pii pair<int,int>
+#define pip pair<int,pii>
+#define ll long long
+#define pll pair<ll,ll>
+#define plp pair<ll,pll>
+#define oo 1000111000
+#define ooo 1000111000111000111
 #define fi first
 #define se second
-#define ll long long
+#define pri_qu priority_queue
+#define vt vector
+vt<pii> WASD={{-1,0}, {0,-1}, {0,1}, {1,0}};
+vt<pii> wasd={{-1,0}, {0,-1}, {0,1}, {1,0}, {-1,-1}, {-1,1}, {1,-1}, {1,1}};
+vt<string> step ={"U", "L", "R", "D", "LU", "RU", "LD", "RD"};
+pri_qu<pll,vt<pll>,greater<pll>> pq;
+#define pb push_back
+const int N=555;
+const int M=10;
+// =========> <3 Han Han <3 <=======
 int main()
 {
+    FPTU;
     char x[]="out000.txt";
     int num_test=50;
     for(int ii=1;ii<=num_test;ii++)
@@ -99,40 +115,8 @@ int main()
             x[k--]=s[u--];
         }
         freopen(x, "w", stdout);
-        int n,d,z;
-        if(ii<=10)
-        {
-            z=500;
-            n=rand()%100+100;
-            d=min(n-1,z/n);
-        }
-        else if(ii<=20)
-        {
-            z=2000;
-            n=rand()%500+1000;
-            d=min(n-1,z/n);
-        }
-        else if(ii<=30)
-        {
-            z=20000;
-            n=rand()%5000+10000;
-            d=min(n-1,z/n);
-        }
-        else if(ii<=40)
-        {
-            z=200000;
-            n=rand()%50000+100000;
-            d=min(n-1,z/n);
-        }
-        else
-        {
-            z=2000000;
-            n=200000;
-            d=10;
-        }
-        cout<<n<<' '<<d<<'\n';
-        cout<<1;
-        for(int i=2;i<n;i++) cout<<((rand()%100)<80);
-        cout<<1;
+        
     }
+    return 0;
 }
+// Gitchee gitchee goo means that I love you
