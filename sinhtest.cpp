@@ -104,8 +104,9 @@ int main()
 {
     FPTU;
     char x[]="out000.txt";
-    int num_test=50;
-    for(int ii=1;ii<=num_test;ii++)
+    int num_test=5;
+    srand(time(NULL));
+    for(int ii=2;ii<=num_test;ii++)
     {
         string s=to_string(ii);
         int k=5;
@@ -115,8 +116,38 @@ int main()
             x[k--]=s[u--];
         }
         freopen(x, "w", stdout);
-        
+        int n,q;
+        n=3;
+        q=rand()%8+2;
+        cout<<n<<'\n';
+        for(int i=1;i<=n;i++)
+        {
+            for(int j=1;j<=n;j++)
+                cout<<rand()%10<<' ';
+            cout<<'\n';
+        }
+        cout<<q<<'\n';
+        while(q--)
+        {
+            int x,y,u,v;
+            x=rand()%n+1;
+            y=rand()%n+1;
+            u=x+rand()%(n-x+1);
+            v=y+rand()%(n-y+1);
+            cout<<x<<' '<<y<<' '<<u<<' '<<v<<'\n';
+        }
     }
     return 0;
 }
 // Gitchee gitchee goo means that I love you
+ /*
+  Sub1 : $N \le 3$ ( 5 điểm )
+
+  Sub2 : $N \le 10$ ( 15 điểm )
+
+  Sub3 : $N \le 50$ ( 10 điểm )
+
+  Sub4 : $N \le 100$ ( 20 điểm )
+
+  Sub5 : $N \le 500$ ( 50 điểm )
+  */
