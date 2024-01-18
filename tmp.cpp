@@ -77,37 +77,80 @@
 #if __cplusplus > 202002L
 #include <spanstream>
 #endif
-// #include<bits/stdc++.h>
 using namespace std;
-// ************ start coding ************
+// ************ Create Tests ************
+void build_test()
+{
+    char x[]="out000.txt";
+    int num_test=100;
+    srand(time(NULL));
+    for(int ii=1;ii<=num_test;ii++)
+    {
+        string s=to_string(ii);
+        int k=5;
+        int u=(int)s.size()-1;
+        while(u>=0)
+        {
+            x[k--]=s[u--];
+        }
+        freopen(x, "w", stdout);
+       // *** opcode here ***
+
+        
+    }
+}
+/* Note:
+  
+*/
+
+// ************ Setting up  ************
 #define FPTU ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define TIME  (1.0 * clock() / CLOCKS_PER_SEC)
 #define pii pair<int,int>
 #define pip pair<int,pii>
+#define ppi pair<pii,int>
 #define ll long long
+#define ull unsigned long long
+#define usi unsigned int
 #define pll pair<ll,ll>
 #define plp pair<ll,pll>
+#define ppl pair<pll,ll>
 #define oo 1000111000
 #define ooo 1000111000111000111
 #define fi first
 #define se second
 #define pri_qu priority_queue
 #define vt vector
-vt<pii> WASD={{-1,0}, {0,-1}, {0,1}, {1,0}};
-vt<pii> wasd={{-1,0}, {0,-1}, {0,1}, {1,0}, {-1,-1}, {-1,1}, {1,-1}, {1,1}};
-vt<string> step ={"U", "L", "R", "D", "LU", "RU", "LD", "RD"};
-pri_qu<pll,vt<pll>,greater<pll>> pq;
 #define pb push_back
-const int N=1111;
-const int M=10;
-// =========> <3 Han Han <3 <=======
+#define all(arr) arr.begin(),arr.end()
+template <typename T> void minimize(T &a, T b){ if(a>b) a=b;}
+template <typename T> void maximize(T &a, T b){ if(a<b) a=b;}
+vt<pii> wasd={{-1,0}, {0,-1}, {0,1}, {1,0}};
+vt<pii> WASD={{-1,0}, {0,-1}, {0,1}, {1,0}, {-1,-1}, {-1,1}, {1,-1}, {1,1}};
+vt<pii> knight={{-1,-1},{-1,1},{1,-1},{1,1}};
+vt<string> step ={"U", "L", "R", "D", "LU", "RU", "LD", "RD"};
+pri_qu<plp,vector<plp>,greater<plp>> pq;
+struct line{ll m,b;};
+const int N=1e6+5;
+const int M=11;
 
+// =========> Declaring variables <=======
+ll n,dp[N],last_line=0;
+ppl x[N];
+vt<line> Line;
+// =========> <3 Han Han <3  <=======
 
 int main()
 {
     FPTU;
-    freopen("inp.txt", "r", stdin);
+    freopen("inp.txt","r",stdin);
     freopen("out.txt", "w", stdout);
 
+    cerr << "Time elapsed: " << TIME << " s.\n";
     return 0;
 }
 // Gitchee gitchee goo means that I love you
+/* Idea:
+
+*/
+
