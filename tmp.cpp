@@ -78,30 +78,6 @@
 #include <spanstream>
 #endif
 using namespace std;
-// ************ Create Tests ************
-void build_test()
-{
-    char x[]="out000.txt";
-    int num_test=100;
-    srand(time(NULL));
-    for(int ii=1;ii<=num_test;ii++)
-    {
-        string s=to_string(ii);
-        int k=5;
-        int u=(int)s.size()-1;
-        while(u>=0)
-        {
-            x[k--]=s[u--];
-        }
-        freopen(x, "w", stdout);
-       // *** opcode here ***
-
-        
-    }
-}
-/* Note:
-  
-*/
 
 // ************ Setting up  ************
 #define FPTU ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
@@ -123,6 +99,7 @@ void build_test()
 #define vt vector
 #define pb push_back
 #define all(arr) arr.begin(),arr.end()
+void build_test();
 template <typename T> void minimize(T &a, T b){ if(a>b) a=b;}
 template <typename T> void maximize(T &a, T b){ if(a<b) a=b;}
 vt<pii> wasd={{-1,0}, {0,-1}, {0,1}, {1,0}};
@@ -130,20 +107,40 @@ vt<pii> WASD={{-1,0}, {0,-1}, {0,1}, {1,0}, {-1,-1}, {-1,1}, {1,-1}, {1,1}};
 vt<pii> knight={{-1,-1},{-1,1},{1,-1},{1,1}};
 vt<string> step ={"U", "L", "R", "D", "LU", "RU", "LD", "RD"};
 pri_qu<plp,vector<plp>,greater<plp>> pq;
-struct line{ll m,b;};
-const int N=1e6+5;
-const int M=11;
+
+random_device rd;
+mt19937 mt(rd());
+ll rand_num(ll a,ll b)
+{
+    uniform_int_distribution<ll> dist(a,b);
+    return dist(mt);
+}
+
+// ************ End Setting ************
+
+struct line{
+    ll m,b;
+    line* lc=NULL;
+    line* rc=NULL;
+    
+    line(ll x=0,ll y=ooo)
+    {
+        m=x; b=y;
+    }
+    ll eval(ll x){
+        return m*x+b;
+    }
+};
+const int N=3e5+2;
 
 // =========> Declaring variables <=======
-ll n,dp[N],last_line=0;
-ppl x[N];
-vt<line> Line;
+
 // =========> <3 Han Han <3  <=======
 
 int main()
 {
     FPTU;
-    freopen("inp.txt","r",stdin);
+    freopen("inp.txt", "r", stdin);
     freopen("out.txt", "w", stdout);
 
     cerr << "Time elapsed: " << TIME << " s.\n";
@@ -154,3 +151,26 @@ int main()
 
 */
 
+// ************ Create Tests ************
+
+void build_test()
+{
+    char x[]="out000.txt";
+    int num_test=100;
+    for(int ii=1;ii<=num_test;ii++)
+    {
+        string s=to_string(ii);
+        int k=5;
+        int u=(int)s.size()-1;
+        while(u>=0)
+        {
+            x[k--]=s[u--];
+        }
+        freopen(x, "w", stdout);
+       // *** opcode here ***
+
+    }
+}
+/* Note:
+  
+*/
