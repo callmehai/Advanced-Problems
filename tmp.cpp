@@ -1,3 +1,21 @@
+/* Do not complain, work harder.
+*******************************************************************
+*                                             _|                  *
+*  _|        _|   _|_|    _|                _|_|_|                *
+*   _|      _|    _| _|   _|          _|_|_|_|_|_|_|_|_|          *
+*   _|      _|    _|  _|  _|            _|_|_|_|_|_|_|            *
+*    _|    _|     _|   _| _|              _|_|_|_|_|              *
+*     _|  _|      _|    _|_|            _|_|_|  _|_|_|            *
+*       _|        _|      _|          _|_|_|      _|_|_|          *
+*******************************************************************
+*                                                                 *
+* _|      _|   _|   _|_|_|   _|_|_|_|   _|    _|     _|_|     _|  *
+* _|      _|   _|   _|          _|      _|    _|   _|    _|   _|  *
+*  _|    _|    _|   _|_|_|      _|      _|_|_|_|   _|_|_|_|   _|  *
+*   _|  _|     _|   _|          _|      _|    _|   _|    _|   _|  *
+*     _|       _|   _|_|_|      _|      _|    _|   _|    _|   _|  *
+*                                                                 *
+*******************************************************************/
 #include <algorithm>
 #include <bitset>
 #include <complex>
@@ -82,6 +100,7 @@ using namespace std;
 // ************ Setting up  ************
 #define FPTU ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 #define TIME  (1.0 * clock() / CLOCKS_PER_SEC)
+#define BUG(x) {cerr << #x << " = " << x << endl;}
 #define pii pair<int,int>
 #define pip pair<int,pii>
 #define ppi pair<pii,int>
@@ -102,6 +121,7 @@ using namespace std;
 void build_test();
 template <typename T> void minimize(T &a, T b){ if(a>b) a=b;}
 template <typename T> void maximize(T &a, T b){ if(a<b) a=b;}
+bool bit(ll a,int i) { return a>>i&1; }
 vt<pii> wasd={{-1,0}, {0,-1}, {0,1}, {1,0}};
 vt<pii> WASD={{-1,0}, {0,-1}, {0,1}, {1,0}, {-1,-1}, {-1,1}, {1,-1}, {1,1}};
 vt<pii> knight={{-1,-1},{-1,1},{1,-1},{1,1}};
@@ -120,56 +140,31 @@ ll rand_num(ll a,ll b)
 
 struct line{
     ll m,b;
-    line* lc=NULL;
-    line* rc=NULL;
-    
     line(ll x=0,ll y=ooo)
     {
         m=x; b=y;
     }
-    ll eval(ll x){
+    ll eval(ll x)
+    {
         return m*x+b;
     }
 };
-const int N=3e5+2;
+const int N=555;
+const int M=3001;
+ll mod=998244353;
 
-// =========> Declaring variables <=======
-
-// =========> <3 Han Han <3  <=======
+// =========> <3 VietHai1709 <3  <=======
 
 int main()
 {
     FPTU;
-    freopen("inp.txt", "r", stdin);
-    freopen("out.txt", "w", stdout);
-
+//    freopen("inp.txt", "r", stdin);
+//    freopen("out.txt","w",stdout);
+    
     cerr << "Time elapsed: " << TIME << " s.\n";
     return 0;
+    
 }
-// Gitchee gitchee goo means that I love you
-/* Idea:
- 
-*/
-// ************ Create Tests ************
 
-void build_test()
-{
-    char x[]="out000.txt";
-    int num_test=100;
-    for(int ii=1;ii<=num_test;ii++)
-    {
-        string s=to_string(ii);
-        int k=5;
-        int u=(int)s.size()-1;
-        while(u>=0)
-        {
-            x[k--]=s[u--];
-        }
-        freopen(x, "w", stdout);
-       // *** opcode here ***
 
-    }
-}
-/* Note:
-  
-*/
+
