@@ -97,12 +97,14 @@ void sinhtest()
         
     }
 }
-/*Note:
+ /*Note:
   
-*/
+  */
+
 // ************ Setting up  ************
 #define FPTU ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 #define TIME  (1.0 * clock() / CLOCKS_PER_SEC)
+
 #define pii pair<int,int>
 #define pip pair<int,pii>
 #define ppi pair<pii,int>
@@ -130,33 +132,44 @@ vt<pii> knight={{-1,-1},{-1,1},{1,-1},{1,1}};
 vt<string> step ={"U", "L", "R", "D", "LU", "RU", "LD", "RD"};
 pri_qu<plp,vector<plp>,greater<plp>> pq;
 struct line{ll m,b;};
-const int N=1e6+5;
+struct event{ll id,cnt; line L;};
+const int N=1e5+5;
 const int M=11;
+
 // =========> Declaring variables <=======
-ll n,a,b,c,sum[N],x[N],dp[N],last_line=0;
-vt<line> Line;
+ll n,c[N],v[N],h[N],dp[N],cnt_line=0;
+line Line[N];
+vt<vt<pll>> ke;
+vt<event> undo;
 // =========> <3 Han Han <3  <=======
 
 bool check_the_last(line u, line v, line w)
 {
-    // intersection of  (u,w) must be greater than that of (u,v)
+    // intersection of (u,v) must be lower than (u,w)'s one
     // else, line v must be deleted
     // <=> (u.b-v.b)/(v.m-u.m) < (u.b-w.b)/(w.m-u.m)
     // <=> (u.b-v.b)*(w.m-u.m) < (v.m-u.m)*(u.b-w.b)
     // return (u.b-v.b)*(w.m-u.m) < (v.m-u.m)*(u.b-w.b);
-    // ** this may exceed long long **
+    // this may be over long long
     return (double)(u.b-v.b)/(v.m-u.m) < (double)(u.b-w.b)/(w.m-u.m);
 }
 void add_line(ll m, ll b)
 {
     line cur={m,b};
-    int P=(int)Line.size();
-    while(P>=2 && !check_the_last(Line[P-2],Line[P-1],cur) )
+    ll l=1, r=cnt_line-1,place=cnt_line;
+    while(l<=r)
     {
-        Line.pop_back();
-        P--;
+        ll mid=(l+r)/2;
+        if(!check_the_last(Line[mid-1], Line[mid], cur))
+        {
+            r=mid-1;
+            place=mid;
+        }
+        else l=mid+1;
     }
-    Line.pb(cur);
+    undo.pb({place,cnt_line,Line[place]});
+    Line[place]=cur;
+    cnt_line=place+1;
 }
 ll val(ll x, line u)
 {
@@ -164,42 +177,65 @@ ll val(ll x, line u)
 }
 ll query(ll x)
 {
-    int P=(int)(Line.size());
-    if(last_line >= P) last_line=P-1;
-    while(last_line+1<P && val(x,Line[last_line]) < val(x, Line[last_line+1]) )
-        last_line++;
-    return val(x,Line[last_line]);
+    ll l=0, r=cnt_line-1;
+    ll ans=val(x,Line[0]);
+    while(l<r)
+    {
+        ll mid=(l+r)/2;
+        ll u=val(x,Line[mid]);
+        ll v=val(x,Line[mid+1]);
+        if(u>v) l=mid+1;
+        else r=mid;
+        minimizell(ans, u);
+        minimizell(ans, v);
+    }
+    return ans;
+}
+void roll_back()
+{
+    event e=undo.back(); undo.pop_back();
+    Line[e.id]=e.L;
+    cnt_line=e.cnt;
+}
+void dfs(ll u,ll pa)
+{
+    if(u!=1) dp[u]=query(v[u])+h[u]*v[u]+c[u];
+
+    add_line(-h[u], dp[u]);
+    for(pll ii: ke[u]) if(ii.fi!=pa)
+    {
+        ll v=ii.fi;
+        ll w=ii.se;
+        h[v]=h[u]+w;
+        dfs(v,u);
+    }
+    roll_back();
 }
 int main()
 {
     FPTU;
 
-    cin>>n>>a>>b>>c;
-    sum[0]=0;
-    for(int i=1;i<=n;i++)
+    cin>>n;
+    ke.resize(n+1);
+    for(int i=1;i<n;i++)
     {
-        cin>>x[i];
-        sum[i]=sum[i-1]+x[i];
+        ll u,v,c;
+        cin>>u>>v>>c;
+        ke[u].pb({v,c});
+        ke[v].pb({u,c});
     }
-    dp[1]= a*x[1]*x[1]+b*x[1]+c;
-    add_line(-2*a*x[1], a*x[1]*x[1]-b*x[1]+dp[1]);
-    for(int i=2;i<=n;i++)
-    {
-        dp[i]= a*sum[i]*sum[i]+b*sum[i]+c;
-        maximizell(dp[i], query(sum[i]) + a*sum[i]*sum[i]+b*sum[i]+c);
-        add_line(-2*a*sum[i], a*sum[i]*sum[i]-b*sum[i]+dp[i]);
-    }
-    cout<<dp[n];
+    for(int i=2;i<=n;i++) cin>>c[i]>>v[i];
+    h[1]=0;
+    dfs(1,0);
+    for(int i=2;i<=n;i++) cout<<dp[i]<<' ';
     cerr << "Time elapsed: " << TIME << " s.\n";
     return 0;
     
 }
 // Gitchee gitchee goo means that I love you
 /*
-dp[n] = dp[k] + a*(sum[n]-sum[k])^2 + b*(sum[n]-sum[k]) + c
-     = dp[k] + a*sum[n]^2 + a*sum[k]^2 - 2*a*sum[n]*sum[k] + b*sum[n] - b*sum[k] + c
-     = (-2*a*sum[k]) * sum[n] + (a*sum[k]^2-b*sum[k]+dp[k]) + (a*sum[n]^2+b*sum[n]+c)
-     = max(m * sum[n] + z ) + p
+dp[n] = min ( dp[k] + (h[n]-h[k])*v[n] + c[n])
+      = min ( dp[k] - h[k]*v[n] + h[n]*v[n]+c[n] )
+      = min ( b - m*x + c) => add(-h[k],dp[k]) , query(v[n])
 */
-
 
