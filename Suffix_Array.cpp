@@ -129,53 +129,51 @@ pri_qu<pii,vector<pii>,greater<pii>> pq;
 
 // =========> <3 VietHai1709 <3  <=======
 const int N=1e6+5;
-
-void radix_sort(vector<ppi> &arr) {
+void radix_sort(vt<ppi> &arr)
+{
     for(int i=1;i<=2;i++)
     {
-        auto key = [&](const ppi x)
+        auto key = [&](const ppi &x)
         {
-            return i==1 ? x.fi.se : x.fi.fi;
+            return i==1 ? x.fi.se:x.fi.fi;
         };
+        
         int MAX=0;
-        for(auto &x:arr) maximize(MAX,key(x));
-        vt<int> cnt(MAX+1,0);
-        for(auto &x:arr) cnt[key(x)]++;
+        for(auto &x:arr) maximize(MAX, key(x));
+        vt<int> cnt(MAX+1);
         vt<int> start(MAX+1);
-        for(int j=1;j<=MAX;j++) start[j]=start[j-1]+cnt[j-1];
+        for(auto &x:arr) cnt[key(x)]++;
+        for(int i=1;i<=MAX;i++) start[i]=start[i-1]+cnt[i-1];
         vt<ppi> new_arr(arr.size());
         for(auto &x:arr)
         {
-            new_arr[start[key(x)]]=x;
-            start[(key(x))]++;
+            new_arr[start[key(x)]++]=x;
         }
-        arr=new_arr;
+        swap(arr,new_arr);
     }
-       
 }
 
 int main(){
     FPTU;
-    freopen("inp.txt","r",stdin);
-    freopen("out.txt","w",stdout);
+
     string s;
-    cin >> s;
-    s += '$';
-    const int n= (int) s.size();
+    cin>>s;
+    s+='$';
+    int n=(int)s.size();
     vt<ppi> suffs(n);
     for(int i=0;i<n;i++) suffs[i]={{s[i],s[i]},i};
     sort(all(suffs));
-    vt<int> ranks(n);
+    vt<int> ranks(n+1);
+    ranks[suffs[0].se]=0;
     for(int i=1;i<n;i++)
     {
         ppi c = suffs[i];
         ppi p = suffs[i-1];
-        ranks[c.se] = ranks[p.se] + (c.fi>p.fi);
+        ranks[c.se]=ranks[p.se]+(c.fi>p.fi);
     }
     for(int k=1;k<n;k*=2)
     {
-        for(auto &[val,id]:suffs)
-            val={ranks[id],ranks[(id+k)%n]};
+        for(auto &[val,id]:suffs) val={ranks[id],ranks[(id+k)%n]};
         
         radix_sort(suffs);
         
@@ -183,12 +181,11 @@ int main(){
         {
             ppi c = suffs[i];
             ppi p = suffs[i-1];
-            ranks[c.se] = ranks[p.se] + (c.fi>p.fi);
+            ranks[c.se]=ranks[p.se]+(c.fi>p.fi);
         }
     }
-    for (int i = 1; i < n; i++) {
-        cout << suffs[i].second << " \n"[i == n - 1];
-    }
+    for(int i=1;i<n;i++) cout<<suffs[i].se<<' ';
     cerr << "Time elapsed: " << TIME << " s.\n";
     return 0;
 }
+//https://judge.yosupo.jp/problem/suffixarray
