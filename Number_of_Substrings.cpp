@@ -73,21 +73,21 @@ vt<string> step ={"U", "L", "R", "D", "LU", "RU", "LD", "RD"};
 pri_qu<pii,vector<pii>,greater<pii>> pq;
 
 // =========> <3 VietHai1709 <3  <=======
-void radix_sort(vt<ppi>&arr)
+void radix_sort(vt<ppi> &arr)
 {
     for(int i=1;i<=2;i++)
     {
-        auto key = [&](const ppi &x)
+        auto key =[&](const ppi&x)
         {
-            return i==1 ? x.fi.se :x.fi.fi;
+            return i==1?x.fi.se:x.fi.fi;
         };
         
-        int MAX=0;
-        for(auto &x:arr) maximize(MAX,key(x));
-        vt<int> cnt(MAX+1);
+        int m=0;
+        for(auto x:arr) maximize(m,key(x));
+        vt<int> cnt(m+1);
         for(auto &x:arr) cnt[key(x)]++;
-        vt<int> start(MAX+1);
-        for(int j=1;j<=MAX;j++) start[j]=start[j-1]+cnt[j-1];
+        vt<int> start(m+1);
+        for(int j=1;j<=m;j++) start[j]=start[j-1]+cnt[j-1];
         vt<ppi> new_arr(arr.size());
         for(auto x:arr)
             new_arr[start[key(x)]++]=x;
@@ -104,7 +104,7 @@ int main(){
     vt<ppi> suffs(n);
     for(int i=0;i<n;i++) suffs[i]={{s[i],s[i]},i};
     sort(all(suffs));
-    vt<int> ranks(n);
+    vt<int>ranks(n);
     for(int i=1;i<n;i++)
     {
         ppi c=suffs[i];
@@ -113,8 +113,8 @@ int main(){
     }
     for(int k=1;k<n;k*=2)
     {
-        for(auto &[val,id]:suffs)
-            val={ranks[id],ranks[(id+k)%n]};
+        for(auto &[val,i]:suffs)
+            val={ranks[i],ranks[(i+k)%n]};
         
         radix_sort(suffs);
         
@@ -127,7 +127,7 @@ int main(){
     }
     vt<int> suffs_idx(n);
     for(int i=0;i<n;i++) suffs_idx[suffs[i].se]=i;
-    vt<int> lcp(n);
+    vt<int> lcp(n-1);
     int start=0;
     for(int i=0;i<n-1;i++)
     {
@@ -137,7 +137,7 @@ int main(){
         lcp[suffs_idx[i]-1]=k;
         start=max(k-1,0);
     }
-    ll diff_substr=(n-1)*n/2;
+    ll diff_substr=n*(n-1)/2;
     for(int i=0;i<n-1;i++) diff_substr-=lcp[i];
     cout<<diff_substr;
     cerr << "Time elapsed: " << TIME << " s.\n";
