@@ -125,22 +125,26 @@ int main(){
             ranks[c.se]=ranks[p.se]+(c.fi>p.fi);
         }
     }
-    vt<int> suffs_idx(n);
-    for(int i=0;i<n;i++) suffs_idx[suffs[i].se]=i;
+    //for(int i=0;i<n;i++) cout<<suffs[i].se<<' ';
+    
+    vt<int> idx_suffs(n);
+    for(int i=0;i<n;i++) idx_suffs[suffs[i].se]=i;
     vt<int> lcp(n-1);
     int start=0;
     for(int i=0;i<n-1;i++)
     {
-        int pre=suffs[suffs_idx[i]-1].se;
+        int pre=suffs[idx_suffs[i]-1].se;
         int k=start;
         while(s[i+k]==s[pre+k]) k++;
-        lcp[suffs_idx[i]-1]=k;
+        lcp[idx_suffs[i]-1]=k;
         start=max(k-1,0);
     }
-    ll diff_substr=n*(n-1)/2;
-    for(int i=0;i<n-1;i++) diff_substr-=lcp[i];
-    cout<<diff_substr;
+    //for(int i=0;i<n-1;i++) cout<<lcp[i]<<' ';
+    ll ans=(n*(n-1)/2);
+    for(int i=0;i<n-1;i++) ans-=lcp[i];
+    cout<<ans;
     cerr << "Time elapsed: " << TIME << " s.\n";
     return 0;
 }
+
 //https://judge.yosupo.jp/problem/number_of_substrings
