@@ -129,6 +129,7 @@ pri_qu<pii,vector<pii>,greater<pii>> pq;
 
 // =========> <3 VietHai1709 <3  <=======
 const int N=1e6+5;
+vt<ppi> suffs;
 void radix_sort(vt<ppi> &arr)
 {
     for(int i=1;i<=2;i++)
@@ -152,7 +153,63 @@ void radix_sort(vt<ppi> &arr)
         swap(arr,new_arr);
     }
 }
+int count_substr(string s,string t)
+{
+    int size_t=(int)t.size();
+    int n=(int)s.size();
+    int L=-1,R=-1;
+    
+    int l=1,r=(int)n-1;
+    while(l<=r)
+    {
+        int mid=(l+r)/2;
+        int st=suffs[mid].se;
+        //cerr<<l<<' '<<r<<' '<<mid<<' '<<st<<'\n';
 
+        int ok=0;
+        for(int i=0;i<size_t;i++)
+            if(s[st+i]!=t[i])
+            {
+                if(s[st+i]>t[i]) ok=-1;
+                else ok=1;
+                break;
+            }
+        if(ok==0)
+        {
+            L=mid;
+            r=mid-1;
+        }
+        else if(ok==-1) r=mid-1;
+        else l=mid+1;
+    }
+    l=1; r=(int)n-1;
+    while(l<=r)
+    {
+        int mid=(l+r)/2;
+        int st=suffs[mid].se;
+        //cerr<<l<<' '<<r<<' '<<mid<<' '<<st<<'\n';
+
+        int ok=0;
+        for(int i=0;i<size_t;i++)
+            if(s[st+i]!=t[i])
+            {
+                if(s[st+i]>t[i]) ok=-1;
+                else ok=1;
+                break;
+            }
+        if(ok==0)
+        {
+            R=mid;
+            l=mid+1;
+        }
+        else if(ok==-1) r=mid-1;
+        else l=mid+1;
+    }
+    
+    if(L==-1) return 0;
+    return R-L+1;
+
+}
 int main(){
     FPTU;
 
@@ -160,7 +217,7 @@ int main(){
     cin>>s;
     s+='$';
     int n=(int)s.size();
-    vt<ppi> suffs(n);
+    suffs.resize(n);
     for(int i=0;i<n;i++) suffs[i]={{s[i],s[i]},i};
     sort(all(suffs));
     vt<int> ranks(n+1);
