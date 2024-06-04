@@ -1,6 +1,6 @@
 //13-12-2019 <3
-#pragma GCC optimize ("O3")
-#pragma GCC target ("sse4")
+//#pragma GCC optimize ("O3")
+//#pragma GCC target ("sse4")
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -46,11 +46,16 @@ using namespace std;
 #define se second
 #define pri_qu priority_queue
 #define vt vector
-#define pb push_back
+#define pb emplace_back
+#define mp make_pair
 #define all(arr) arr.begin(),arr.end()
 #define prec(n) fixed<<setprecision(n)
 #define bit(n, i) (((n) >> (i)) & 1)
 #define bitcount(n) __builtin_popcountll(n)
+#define bitmin(n) __builtin_ctzll(n)
+#define bitmax(n) 31-__builtin_clz(n)
+#define bitmaxll(n) 63-__builtin_clz(n)
+
 #define db(x) cerr << #x << " = " << (x) << '\n';
 void build_test();
 random_device rd;
@@ -86,7 +91,7 @@ void read_file()
 
 void Missing_Min()
 {
-
+   
 }
 int main(){
     FPTU; read_file();
