@@ -58,14 +58,13 @@ using namespace std;
 #define db(x) cerr << #x << " = " << (x) << '\n';
 random_device rd;
 mt19937 mt(rd());
-ll rand_num(ll a,ll b)
-{
-    uniform_int_distribution<ll> dist(a,b);
-    return dist(mt);
-}
+ll rand_num(ll a,ll b) {uniform_int_distribution<ll> dist(a,b);return dist(mt);}
+
+int mod=1e9+7; // MODDDDDDDDDDDDD
+
 template <typename T> void minimize(T &a, T b){ if(a>b)  a=b; }
 template <typename T> void maximize(T &a, T b){ if(a<b)  a=b; }
-template <typename T> void  minimod(T &a, T b){ if(a>=b) a-=b;}
+template <typename T> void add(T &a, T b){ a+=b; if(a>=mod) a-=mod; }
 template <typename T> T gcd(T a, T b)
 {
     while(a!=0&&b!=0)
@@ -80,7 +79,6 @@ vt<pii> WASD={{-1,0}, {0,-1}, {0,1}, {1,0}, {-1,-1}, {-1,1}, {1,-1}, {1,1}};
 vt<pii> knight={{-1,-2},{-1,2},{1,-2},{1,2},{-2,-1},{-2,1},{2,-1},{2,1}};
 vt<string> step ={"U", "L", "R", "D", "LU", "RU", "LD", "RD"};
 
-int mod=1e9+7; // MODDDDDDDDDDDDDD
 
 struct DSU {
     int n;
@@ -137,8 +135,8 @@ struct Matrix{
     vt<vt<int>> a;
     Matrix(int _x,int _y)
     {
-        x=_x;
-        y=_y;
+        x=(int)_x;
+        y=(int)_y;
         a.resize(x,vt<int>(y,0));
     }
     Matrix Identity_Matrix(int n)
@@ -181,7 +179,7 @@ void read_file()
 
 void Missing_Min()
 {
-
+    
 }
 int main(){
     FPTU; read_file();
