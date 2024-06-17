@@ -55,9 +55,7 @@ using namespace std;
 #define bitmin(n) __builtin_ctzll(n)
 #define bitmax(n) 31-__builtin_clz(n)
 #define bitmaxll(n) 63-__builtin_clz(n)
-
 #define db(x) cerr << #x << " = " << (x) << '\n';
-void build_test();
 random_device rd;
 mt19937 mt(rd());
 ll rand_num(ll a,ll b)
