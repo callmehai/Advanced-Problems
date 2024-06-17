@@ -41,7 +41,7 @@ using namespace std;
 #define ppp pair<pii,pii>
 #define oo 1000111000
 #define ooo 1000111000111000111
-#define inf 4557430888798830399
+#define inf 0x3f //4557430888798830399
 #define fi first
 #define se second
 #define pri_qu priority_queue
@@ -74,11 +74,10 @@ template <typename T> T gcd(T a, T b)
     }
     return a+b;
 }
-vt<pii> wasd={{-1,0}, {0,-1}, {0,1}, {1,0}};
-vt<pii> WASD={{-1,0}, {0,-1}, {0,1}, {1,0}, {-1,-1}, {-1,1}, {1,-1}, {1,1}};
-vt<pii> knight={{-1,-2},{-1,2},{1,-2},{1,2},{-2,-1},{-2,1},{2,-1},{2,1}};
-vt<string> step ={"U", "L", "R", "D", "LU", "RU", "LD", "RD"};
-
+vector<pair<int,int>> queen  = {{-1,0},{0,-1},{0,1},{1,0},{-1,-1},{-1,1},{1,-1},{1,1}};
+vector<pair<int,int>> knight = {{-1,-2},{-1,2},{1,-2},{1,2},{-2,-1},{-2,1},{2,-1},{2,1}};
+vector<pair<int,int>> bishop = {{-1,-1},{-1,1},{1,-1},{1,1}};
+vector<pair<int,int>> rook   = {{-1,0},{0,-1},{0,1},{1,0}};
 
 struct DSU {
     int n;
@@ -113,11 +112,11 @@ long long MST(vector<pair<int,pair<int,int>>> &e,int n) { // return MST and its 
     e = ans;
     return res;
 }
-long long poww(long long a,ll b, long long M)
+long long poww(long long a,long long b, long long M)
 {
     if(b==0) return 1;
     if(b==1) return a%M;
-    ll p=poww(a,b/2,M);
+    long long p=poww(a,b/2,M);
     if(b&1) return p*p%M*a%M;
     return p*p%M;
 }
