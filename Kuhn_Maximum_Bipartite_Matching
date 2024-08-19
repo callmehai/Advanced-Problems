@@ -1,5 +1,4 @@
 //{ Driver Code Starts
-
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -7,12 +6,13 @@ using namespace std;
 class Solution {
 public:
     vector<int> pre;
-	vector<bool> used;
+	vector<int> used;
+	int T=0;
 	int n,m;
 	vector<vector<int>> g;
     bool try_kuhn(int u){
-        if( used[u]) return false;
-        used[u]=true;
+        if( used[u]==T) return false;
+        used[u]=T;
         for(int v=0;v<n;v++)
             if(g[u][v])
             {
@@ -28,19 +28,17 @@ public:
 	    g=G;
 	    m=g.size();
 	    n=g[0].size();
-	    used.assign(m,false);
+	    used.assign(m,-1);
 	    pre.assign(n,-1);
-	    
+	    T=0;
 	    
 	    
 	    for(int i=0;i<m;i++)
 	    {
-	        used.assign(n,false);
-	        try_kuhn(i);
+	        if(try_kuhn(i)) T++;
 	    }
-	    int ans=0;
-	    for(int i=0;i<n;i++) if(pre[i]!=-1) ans++;
-	    return ans;
+	    
+	    return T;
 	}
 
 };
