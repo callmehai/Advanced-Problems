@@ -1,0 +1,66 @@
+//{ Driver Code Starts
+
+#include<bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+class Solution {
+public:
+    vector<int> pre;
+	vector<bool> used;
+	int n,m;
+	vector<vector<int>> g;
+    bool try_kuhn(int u){
+        if( used[u]) return false;
+        used[u]=true;
+        for(int v=0;v<n;v++)
+            if(g[u][v])
+            {
+                if(pre[v]==-1 || try_kuhn(pre[v]))
+                {
+                    pre[v]=u;
+                    return true;
+                }
+            }
+           return false;
+    }
+	int maximumMatch(vector<vector<int>>&G){
+	    g=G;
+	    m=g.size();
+	    n=g[0].size();
+	    used.assign(m,false);
+	    pre.assign(n,-1);
+	    
+	    
+	    
+	    for(int i=0;i<m;i++)
+	    {
+	        used.assign(n,false);
+	        try_kuhn(i);
+	    }
+	    int ans=0;
+	    for(int i=0;i<n;i++) if(pre[i]!=-1) ans++;
+	    return ans;
+	}
+
+};
+
+//{ Driver Code Starts.
+int main(){
+	int tc;
+	cin >> tc;
+	while(tc--){
+		int m, n;
+		cin >> m >> n;
+		vector<vector<int>>G(m, vector<int>(n, 0));
+		for(int i = 0; i < m; i++){
+			for(int j = 0; j < n; j++)
+				cin >> G[i][j];
+		}
+		Solution obj;
+		int ans = obj.maximumMatch(G);
+		cout << ans << "\n";    
+	}
+	return 0;
+}
+// } Driver Code Ends
