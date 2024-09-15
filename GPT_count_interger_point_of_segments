@@ -1,0 +1,104 @@
+#include <iostream>
+#include <set>
+#include <cmath>
+#include <utility>
+using namespace std;
+#define oo 1000000000
+#define ll long long
+// Hàm trả về ước chung lớn nhất (gcd)
+ll gcd(ll a, ll b) {
+    if (b == 0) return a;
+    return gcd(b, a % b);
+}
+
+// Hàm kiểm tra xem giá trị c có nằm trong khoảng [a, b] không
+bool is_between(ll a, ll b, ll c) {
+    return min(a, b) <= c && c <= max(a, b);
+}
+
+// Hàm để đếm số điểm nguyên trên đoạn thẳng
+ll count_points_on_segment(ll x1, ll y1, ll x2, ll y2) {
+    // Tính delta x và delta y
+    ll dx = x2 - x1;
+    ll dy = y2 - y1;
+    
+    // Tính gcd của dx và dy để tìm số bước
+    ll steps = gcd(abs(dx), abs(dy));
+    
+    // Số điểm nguyên trên đoạn thẳng = steps + 1 (tính cả hai đầu mút)
+    return steps + 1;
+}
+
+// Hàm tìm giao điểm giữa hai đoạn thẳng
+pair<int, int> find_intersection(ll x1, ll y1, ll x2, ll y2, ll x3, ll y3, ll x4, ll y4) {
+    // Hệ số của đoạn thẳng 1: A1 * x + B1 * y = C1
+    ll A1 = y2 - y1;
+    ll B1 = x1 - x2;
+    ll C1 = A1 * x1 + B1 * y1;
+
+    // Hệ số của đoạn thẳng 2: A2 * x + B2 * y = C2
+    ll A2 = y4 - y3;
+    ll B2 = x3 - x4;
+    ll C2 = A2 * x3 + B2 * y3;
+
+    // Tính định thức để kiểm tra xem hai đường thẳng có song song không
+    ll det = A1 * B2 - A2 * B1;
+    if (det == 0) {
+        // Đường thẳng song song hoặc trùng nhau
+        return {-oo, -oo}; // Không có giao điểm hoặc giao nhau tại vô số điểm
+    }
+
+    // Tìm tọa độ của giao điểm dưới dạng số thực
+    double x = (double)(B2 * C1 - B1 * C2) / det;
+    double y = (double)(A1 * C2 - A2 * C1) / det;
+
+    // Kiểm tra xem giao điểm có nằm trên cả hai đoạn thẳng không
+    if (is_between(x1, x2, (ll)round(x)) && is_between(y1, y2, (ll)round(y)) &&
+        is_between(x3, x4, (ll)round(x)) && is_between(y3, y4, (ll)round(y))) {
+        
+        // Kiểm tra xem giao điểm có là số nguyên không
+        if (x == round(x) && y == round(y)) {
+            return {(ll)round(x), (ll)round(y)}; // Trả về giao điểm nguyên
+        }
+    }
+
+    return {-oo, -oo}; // Giao điểm không hợp lệ
+}
+ll x[1000], y[1000], z[1000], t[1000];
+
+int main() {
+    int N;
+    cin >> N;
+
+    set<pair<ll, ll>> intersection_points; // Tập hợp để lưu các điểm giao
+
+    int total_points = 0; // Tổng số điểm nguyên trên tất cả các đoạn
+
+    // Lưu trữ thông tin các đoạn thẳng
+
+    // Đọc các đoạn thẳng
+    for (int i = 0; i < N; ++i) {
+        cin >> x[i] >> y[i] >> z[i] >> t[i];
+        // Tính số điểm nguyên trên đoạn thẳng này và cộng vào tổng
+        ll ans= count_points_on_segment(x[i], y[i], z[i], t[i]);
+        //cout<<ans<<'\n';
+        total_points+=ans;
+    }
+
+    // Kiểm tra giao điểm giữa từng cặp đoạn thẳng
+    for (int i = 0; i < N; ++i) {
+        for (int j = i + 1; j < N; ++j) {
+            pair<int, int> intersection = find_intersection(x[i], y[i], z[i], t[i], x[j], y[j], z[j], t[j]);
+            if (intersection.first != -oo) { // Nếu có giao điểm
+                intersection_points.insert(intersection); // Thêm giao điểm vào tập hợp
+            }
+        }
+    }
+    //cout<<total_points<<'\n';
+    //for(auto [x,y]:intersection_points) cout<<x<<' '<<y<<'\n';
+    // Kết quả là tổng số điểm trừ đi số điểm trùng
+    cout << total_points - intersection_points.size() << endl;
+
+    return 0;
+}
+//https://lehongphong.ntucoder.net/Problem/Details/7558
