@@ -3,7 +3,7 @@
 #include <cmath>
 #include <utility>
 using namespace std;
-#define oo 1000000000
+#define oo 123456789
 #define ll long long
 // Hàm trả về ước chung lớn nhất (gcd)
 ll gcd(ll a, ll b) {
