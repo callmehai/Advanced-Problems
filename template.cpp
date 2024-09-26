@@ -94,6 +94,29 @@ long long mull(long long a,long long b,long long M) // if a*b > 1e18
     if(b&1) return (+c+a)%M;
     return (c+c)%M;
 }
+struct EulerTour{
+    int n;
+    vt<int> A;
+    vt<int> end;
+    vt<int> pos;
+    vt<vt<int>> nxt;
+    int flag=0;
+    EulerTour(int _){
+        n=_;
+        A.resize(n+1);
+        end.resize(n+1);
+        pos.resize(n+1);
+        nxt.resize(n+1);
+    }
+    void build(int u){
+        pos[u]=++flag;
+        A[flag]=u;
+        for(int v : nxt[u]){
+            build(v);
+        }
+        end[u]=flag;
+    }
+};
 struct DSU {
     int n;
     int cnt;
