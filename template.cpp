@@ -55,9 +55,13 @@ using namespace std;
 #define bitmax(n) 31-__builtin_clz(n)
 #define bitmaxll(n) 63-__builtin_clzll(n)
 #define db(x) cerr << #x << " = " << (x) << '\n';
-random_device rd;
-mt19937 mt(rd());
-ll rand_num(ll a,ll b) {uniform_int_distribution<ll> dist(a,b);return dist(mt);}
+
+ll rand_num(ll a,ll b) {
+    random_device rd;
+    mt19937 mt(rd());
+    uniform_int_distribution<ll> dist(a,b);
+    return dist(mt);
+}
 
 int mod=1e9+7; // MODDDDDDDDDDDDD
 
