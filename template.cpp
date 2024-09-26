@@ -77,7 +77,23 @@ vector<pair<int,int>> queen  = {{-1,0},{0,-1},{0,1},{1,0},{-1,-1},{-1,1},{1,-1},
 vector<pair<int,int>> knight = {{-1,-2},{-1,2},{1,-2},{1,2},{-2,-1},{-2,1},{2,-1},{2,1}};
 vector<pair<int,int>> bishop = {{-1,-1},{-1,1},{1,-1},{1,1}};
 vector<pair<int,int>> rook   = {{-1,0},{0,-1},{0,1},{1,0}};
-
+long long poww(long long a,long long b, long long M)
+{
+    if(b==0) return 1;
+    if(b==1) return a%M;
+    long long p=poww(a,b/2,M);
+    if(b&1) return p*p%M*a%M;
+    return p*p%M;
+}
+long long mull(long long a,long long b,long long M) // if a*b > 1e18
+{
+    if(b==0) return 0;
+    if(b==1) return a%M;
+    
+    long long c=mull(a,b/2,M);
+    if(b&1) return (+c+a)%M;
+    return (c+c)%M;
+}
 struct DSU {
     int n;
     int cnt;
@@ -85,7 +101,7 @@ struct DSU {
     DSU(int _n) {
         n = _n;
         cnt=n;
-        pa.resize(n,-1);
+        pa.resize(n+1,-1);
     }
     int root(int u) {
         return pa[u] < 0 ? u : pa[u] = root(pa[u]);
@@ -123,22 +139,25 @@ struct DSU {
 //    e = ans;
 //    return res;
 //}
-long long poww(long long a,long long b, long long M)
+void Dijktra(int st,vt<vt<int>> Edge, vt<int> &dis)
 {
-    if(b==0) return 1;
-    if(b==1) return a%M;
-    long long p=poww(a,b/2,M);
-    if(b&1) return p*p%M*a%M;
-    return p*p%M;
-}
-long long mull(long long a,long long b,long long M) // if a*b > 1e18
-{
-    if(b==0) return 0;
-    if(b==1) return a%M;
-    
-    long long c=mull(a,b/2,M);
-    if(b&1) return (+c+a)%M;
-    return (c+c)%M;
+    dis[st]=0;
+    priority_queue<pii,vt<pii>,greater<pii>> pq;
+    pq.push({0,st});
+    while(!pq.empty())
+    {
+        pii k=pq.top(); pq.pop();
+        int u = k.se, w = k.fi;
+        
+        if (w > dis[u]) continue;
+
+        for(auto &v: Edge[u]) {
+           if (dis[v] > w + 1) {
+               dis[v] = 1 + w;
+               pq.push({dis[v], v});
+           }
+        }
+    }
 }
 struct Matrix{
     int x,y;
@@ -372,26 +391,7 @@ struct SegmentTree{ // divided by 3
         
     }
 };
-void Dijktra(int st,vt<vt<int>> Edge, vt<int> &dis)
-{
-    dis[st]=0;
-    priority_queue<pii,vt<pii>,greater<pii>> pq;
-    pq.push({0,st});
-    while(!pq.empty())
-    {
-        pii k=pq.top(); pq.pop();
-        int u = k.se, w = k.fi;
-        
-        if (w > dis[u]) continue;
 
-        for(auto &v: Edge[u]) {
-           if (dis[v] > w + 1) {
-               dis[v] = 1 + w;
-               pq.push({dis[v], v});
-           }
-        }
-    }
-}
 void read_file()
 {
     freopen("sample.inp","r",stdin);
