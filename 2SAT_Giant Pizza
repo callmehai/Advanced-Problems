@@ -1,0 +1,171 @@
+//#pragma GCC optimize ("O3")
+//#pragma GCC target ("sse4")
+//#incluse <bits/stdc++.h>
+#include <iostream>
+#include <sstream>
+#include <fstream>
+#include <string>
+#include <cstring>
+#include <vector>
+#include <deque>
+#include <queue>
+#include <stack>
+#include <set>
+#include <cstring>
+#include <cassert>
+#include <list>
+#include <tuple>
+#include <map>
+#include <unordered_map>
+#include <iomanip>
+#include <algorithm>
+#include <functional>
+#include <cstdlib>
+#include <cstdio>
+#include <random>
+using namespace std;
+ 
+// ************ Setting up  ************
+#define FPTU ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define TIME  (1.0 * clock() / CLOCKS_PER_SEC)
+#define BUG(x) {cerr << #x << " = " << x << endl;}
+#define pii pair<int,int>
+#define pip pair<int,pii>
+#define ppi pair<pii,int>
+#define ll  long long
+#define ull unsigned long long
+#define usi unsigned int
+#define pll pair<ll,ll>
+#define plp pair<ll,pll>
+#define ppl pair<pll,ll>
+#define ppp pair<pii,pii>
+#define oo 1000111000
+#define ooo 1000111000111000111
+#define inf 0x3f //4557430888798830399
+#define fi first
+#define se second
+#define vt vector
+#define pb push_back
+#define all(arr) arr.begin(),arr.end()
+#define bit(n, i) (((n) >> (i)) & 1)
+#define db(x) cerr << #x << " = " << (x) << '\n';
+ 
+ll rand_num(ll a,ll b) {
+    random_device rd;
+    mt19937 mt(rd());
+    uniform_int_distribution<ll> dist(a,b);
+    return dist(mt);
+}
+ 
+int mod=1e9+7; // MODDDDDDDDDDDDD
+ 
+template <typename T> void minimize(T &a, T b){ if(a>b)  a=b; }
+template <typename T> void maximize(T &a, T b){ if(a<b)  a=b; }
+template <typename T> void add(T &a, T b){ a+=b; if(a>=mod) a-=mod; }
+template <typename T> T gcd(T a, T b){
+    while(a!=0&&b!=0) if(a>b) a%=b; else b%=a; return a+b; }
+void read_file()
+{
+    freopen("sample.inp","r",stdin);
+    freopen("sample.out","w",stdout);
+}
+// =========> <3 VietHai1709 <3  <=========
+#define node pair<int,int>
+int n,m;
+int notP(int u){
+    if(u<=n) return u+n;
+    return u-n;
+}
+ 
+struct Tajan{
+    int n,cnt,timeDFS;
+    vt<int> num,low,id,st;
+    vt<vt<int>> ke;
+ 
+    Tajan(int _){
+        n=_;
+        cnt=0;
+        timeDFS=0;
+        num.resize(n+1);
+        low.resize(n+1);
+        id.resize(n+1,0);
+        st.resize(n+1);
+        ke.resize(n+1);
+        for(int i=1;i<=n;i++) ke[i].clear();
+    }
+    void dfs(int u){
+        num[u] = low[u] = ++timeDFS;
+        st[++st[0]]=u;
+        for(int &v : ke[u]){
+            if(id[v]) continue;
+            if(num[v]==0){
+                dfs(v);
+                low[u]=min(low[u],low[v]);
+            }
+            else{
+                low[u]=min(low[u],num[v]);
+            }
+        }
+        
+        if(num[u]==low[u]){
+            cnt++;
+            while(true){
+                int v = st[st[0]--];
+                id[v]=cnt;
+                if(v==u) break;
+            }
+        }
+        
+    }
+    void build(){
+        for(int i=1;i<=n;i++) if(!id[i]){
+            dfs(i);
+        }
+    }
+};
+ 
+void Minnnnnnn()
+{
+    cin>>m>>n;
+    Tajan myTajan(n*2);
+    for(int i=1;i<=m;i++){
+        char x,y;
+        int u,v;
+        cin>>x>>u>>y>>v;
+        if(x=='-') u+=n;
+        if(y=='-') v+=n;
+        myTajan.ke[notP(u)].pb(v);
+        myTajan.ke[notP(v)].pb(u);
+        //cout<<notP(u)<<' '<<v<<'\n'<<notP(v)<<' '<<u<<'\n';
+    }
+    myTajan.build();
+    for(int u=1;u<=n;u++){
+        if(myTajan.id[u] == myTajan.id[notP(u)]){
+            cout<<"IMPOSSIBLE";
+            return;
+        }
+    }
+//    for(int i=1;i<=n*2;i++) cout<<myTajan.id[i]<<' '; cout<<'\n';
+    for(int u=1;u<=n;u++){
+        if(myTajan.id[u] < myTajan.id[u+n])
+            cout<<'+';
+        else
+            cout<<'-';
+    }
+}
+ 
+ 
+int main(){
+    
+    FPTU;// read_file();
+    int Test_case=1;
+    //cin>>Test_case;
+    while(Test_case--)
+    {
+        Minnnnnnn();
+    }
+    cerr << "Time elapsed: " << TIME << " s.\n";
+ 
+    return 0;
+}
+//https://cses.fi/problemset/task/1684/
