@@ -186,6 +186,58 @@ void Dijktra(int st,vt<vt<int>> Edge, vt<int> &dis)
         }
     }
 }
+// 2SAT 
+int notP(int u){
+    if(u<=n) return u+n;
+    return u-n;
+}
+
+struct Tajan{
+    int n,cnt,timeDFS;
+    vt<int> num,low,id,st;
+    vt<vt<int>> ke;
+
+    Tajan(int _){
+        n=_;
+        cnt=0;
+        timeDFS=0;
+        num.resize(n+1);
+        low.resize(n+1);
+        id.resize(n+1,0);
+        st.resize(n+1);
+        ke.resize(n+1);
+        for(int i=1;i<=n;i++) ke[i].clear();
+    }
+    void dfs(int u){
+        num[u] = low[u] = ++timeDFS;
+        st[++st[0]]=u;
+        for(int &v : ke[u]){
+            if(id[v]) continue;
+            if(num[v]==0){
+                dfs(v);
+                low[u]=min(low[u],low[v]);
+            }
+            else{
+                low[u]=min(low[u],num[v]);
+            }
+        }
+        
+        if(num[u]==low[u]){
+            cnt++;
+            while(true){
+                int v = st[st[0]--];
+                id[v]=cnt;
+                if(v==u) break;
+            }
+        }
+        
+    }
+    void build(){
+        for(int i=1;i<=n;i++) if(!id[i]){
+            dfs(i);
+        }
+    }
+};
 struct Matrix{
     int x,y;
     vt<vt<int>> a;
