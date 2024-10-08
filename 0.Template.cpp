@@ -103,6 +103,21 @@ long long mull(long long a,long long b,long long M) // if a*b > 1e18
     if(b&1) return (+c+a)%M;
     return (c+c)%M;
 }
+int phi(int n) {
+    int res = n;
+    for (int i = 2; i * i <= n; ++i) {
+        if (n % i == 0) {
+            while (n % i == 0) {
+                n /= i;
+            }
+            res -= res / i;
+        }
+    }
+    if (n != 1) {
+        res -= res / n;
+    }
+    return res;
+}
 struct line{
     ll a,b;
     line(ll x=0,ll y=ooo)
