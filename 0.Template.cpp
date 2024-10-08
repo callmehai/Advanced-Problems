@@ -1,28 +1,39 @@
-//13/12/2019 - 08/05/2022
-//#pragma GCC optimize ("O3")
-//#pragma GCC target ("sse4")
-#include <iostream>
-#include <sstream>
-#include <fstream>
-#include <string>
-#include <cstring>
-#include <vector>
-#include <deque>
-#include <queue>
-#include <stack>
-#include <set>
-#include <cstring>
-#include <cassert>
-#include <list>
+#pragma GCC optimize ("O3")
+
+//#incluse <bits/stdc++.h>
+
+#include <iostream>     // Input/output stream objects
+#include <fstream>      // File stream objects
+#include <sstream>      // String stream objects
+#include <iomanip>      // Input/output manipulators
+#include <string>       // String class and functions
+#include <vector>       // Dynamic array
+#include <list>         // Doubly linked list
+#include <set>          // Set container
+#include <map>          // Map container
+#include <queue>        // Queue container
+#include <stack>        // Stack container
+#include <algorithm>    // Algorithms on sequences (e.g., sort, find)
+#include <cmath>        // Mathematical functions
+#include <ctime>        // Date and time functions
+#include <cstdlib>      // General purpose functions (e.g., memory management)
+#include <cstring>      // C-style string functions
+#include <cctype>       // Character classification functions
+#include <cassert>      // Assert function for debugging
+#include <exception>    // Standard exceptions
+#include <functional>   // Function objects
+#include <iterator>     // Iterator classes
+#include <limits>       // Numeric limits
+#include <locale>       // Localization and internationalization
+#include <numeric>      // Numeric operations (e.g., accumulate)
+#include <random>       // Random number generators
+#include <stdexcept>    // Standard exception classes
+#include <typeinfo>     // Runtime type information
+#include <utility>      // Utility components (e.g., std::pair)
 #include <tuple>
-#include <map>
-#include <unordered_map>
-#include <iomanip>
-#include <algorithm>
-#include <functional>
-#include <cstdlib>
 #include <cstdio>
-#include <random>
+#include <bitset>
+
 using namespace std;
 
 // ************ Setting up  ************
@@ -46,14 +57,8 @@ using namespace std;
 #define se second
 #define vt vector
 #define pb push_back
-#define mp make_pair
 #define all(arr) arr.begin(),arr.end()
-#define prec(n) fixed<<setprecision(n)
 #define bit(n, i) (((n) >> (i)) & 1)
-#define bitcount(n) __builtin_popcountll(n)
-#define bitmin(n) __builtin_ctzll(n)
-#define bitmax(n) 31-__builtin_clz(n)
-#define bitmaxll(n) 63-__builtin_clzll(n)
 #define db(x) cerr << #x << " = " << (x) << '\n';
 
 ll rand_num(ll a,ll b) {
