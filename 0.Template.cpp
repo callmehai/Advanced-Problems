@@ -114,6 +114,37 @@ struct line{
         return a*x+b;
     }
 };
+struct ConvextHullTrick{
+    int n;
+    int flag;
+    vt<line> Line;
+    ConvextHullTrick(){
+        n=0;
+        flag=0;
+        Line.clear();
+    }
+    bool bad(line u,line v,line w)
+    {
+        return (double)(u.b-w.b)/(w.a-u.a)<=(double)(u.b-v.b)/(v.a-u.a);
+        //return (u.b-w.b)*(v.m-u.m)<=(u.b-v.b)*(w.m-u.m);
+    }
+    void add(line L)
+    {
+        while(n>=2 && bad(Line[n-2],Line[n-1],L))
+        {
+            Line.pop_back();
+            n--;
+        }
+        Line.pb(L);
+        n++;
+    }
+    ll query(ll x)
+    {
+        if(flag>n-1) flag=n-1;
+        while(flag+1<n && Line[flag].get(x)>Line[flag+1].get(x)) flag++;
+        return Line[flag].get(x);
+    }
+};
 struct LichaoTree{
     // get max => lower convexhull
     // get min => upper convexhull
