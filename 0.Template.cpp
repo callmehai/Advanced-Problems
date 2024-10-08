@@ -98,6 +98,53 @@ long long mull(long long a,long long b,long long M) // if a*b > 1e18
     if(b&1) return (+c+a)%M;
     return (c+c)%M;
 }
+struct line{
+    ll a,b;
+    line(ll x=0,ll y=ooo)
+    {
+        a=x; b=y;
+    }
+    ll get(ll x)
+    {
+        return a*x+b;
+    }
+};
+struct LichaoTree{
+    // get max => lower convexhull
+    // get min => upper convexhull
+
+    vt<line> F;
+    int n;
+    LichaoTree(int _){
+        n=_;
+        F.resize(n<<2);
+    }
+    void reset(){
+        F.clear();
+        F.resize(n<<2);
+    }
+    void add(int id,int l,int r,line cur)
+    {
+        int mid=(l+r)>>1;
+        bool lef = cur.get(l) < F[id].get(l);
+        bool mi = cur.get(mid) < F[id].get(mid);
+        if(mi) swap(F[id],cur);
+        if(l==r) return;
+        if(lef==mi) add(id*2+1,mid+1,r,cur);
+        else add(id*2,l,mid,cur);
+    }
+
+    ll query(int id,int l,int r,ll x)
+    {
+        int mid=(l+r)>>1;
+        if(l==r) return F[id].get(x);
+        ll ans=F[id].get(x);
+        if(x<=mid) minimize(ans, query(id*2,l,mid,x));
+        else minimize(ans, query(id*2+1,mid+1,r,x));
+        return ans;
+    }
+    
+};
 struct EulerTour{
     int n;
     vt<int> A;
