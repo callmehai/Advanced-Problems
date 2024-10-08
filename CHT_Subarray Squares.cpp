@@ -1,82 +1,39 @@
-#include <algorithm>
-#include <bitset>
-#include <complex>
-#include <deque>
-#include <exception>
-#include <fstream>
-#include <functional>
-#include <iomanip>
-#include <ios>
-#include <iosfwd>
-#include <iostream>
-#include <istream>
-#include <iterator>
-#include <limits>
-#include <list>
-#include <locale>
-#include <map>
-#include <memory>
-#include <new>
-#include <numeric>
-#include <ostream>
-#include <queue>
-#include <set>
-#include <sstream>
-#include <stack>
-#include <stdexcept>
-#include <streambuf>
-#include <string>
-#include <typeinfo>
-#include <utility>
-#include <valarray>
-#include <vector>
+#pragma GCC optimize ("O3")
 
-#if __cplusplus >= 201103L
-#include <array>
-#include <atomic>
-#include <chrono>
-#include <codecvt>
-#include <condition_variable>
-#include <forward_list>
-#include <future>
-#include <initializer_list>
-#include <mutex>
-#include <random>
-#include <ratio>
-#include <regex>
-#include <scoped_allocator>
-#include <system_error>
-#include <thread>
+//#incluse <bits/stdc++.h>
+
+#include <iostream>     // Input/output stream objects
+#include <fstream>      // File stream objects
+#include <sstream>      // String stream objects
+#include <iomanip>      // Input/output manipulators
+#include <string>       // String class and functions
+#include <vector>       // Dynamic array
+#include <list>         // Doubly linked list
+#include <set>          // Set container
+#include <map>          // Map container
+#include <queue>        // Queue container
+#include <stack>        // Stack container
+#include <algorithm>    // Algorithms on sequences (e.g., sort, find)
+#include <cmath>        // Mathematical functions
+#include <ctime>        // Date and time functions
+#include <cstdlib>      // General purpose functions (e.g., memory management)
+#include <cstring>      // C-style string functions
+#include <cctype>       // Character classification functions
+#include <cassert>      // Assert function for debugging
+#include <exception>    // Standard exceptions
+#include <functional>   // Function objects
+#include <iterator>     // Iterator classes
+#include <limits>       // Numeric limits
+#include <locale>       // Localization and internationalization
+#include <numeric>      // Numeric operations (e.g., accumulate)
+#include <random>       // Random number generators
+#include <stdexcept>    // Standard exception classes
+#include <typeinfo>     // Runtime type information
+#include <utility>      // Utility components (e.g., std::pair)
 #include <tuple>
-#include <typeindex>
-#include <type_traits>
-#include <unordered_map>
-#include <unordered_set>
-#endif
+#include <cstdio>
+#include <bitset>
 
-#if __cplusplus >= 201402L
-#include <shared_mutex>
-#include <cstring>
-#endif
-
-#if __cplusplus >= 202002L
-#include <barrier>
-#include <bit>
-#include <compare>
-#include <concepts>
-#if __cpp_impl_coroutine
-# include <coroutine>
-#endif
-#include <latch>
-#include <numbers>
-#include <span>
-#include <semaphore>
-#include <version>
-#endif
-
-#if __cplusplus > 202002L
-#include <spanstream>
-#endif
 using namespace std;
 
 // ************ Setting up  ************
@@ -86,140 +43,122 @@ using namespace std;
 #define pii pair<int,int>
 #define pip pair<int,pii>
 #define ppi pair<pii,int>
-#define ll long long
+#define ll  long long
 #define ull unsigned long long
 #define usi unsigned int
 #define pll pair<ll,ll>
 #define plp pair<ll,pll>
 #define ppl pair<pll,ll>
+#define ppp pair<pii,pii>
 #define oo 1000111000
 #define ooo 1000111000111000111
+#define inf 0x3f //4557430888798830399
 #define fi first
 #define se second
-#define pri_qu priority_queue
 #define vt vector
 #define pb push_back
 #define all(arr) arr.begin(),arr.end()
-void build_test();
-template <typename T> void minimize(T &a, T b){ if(a>b) a=b;}
-template <typename T> void maximize(T &a, T b){ if(a<b) a=b;}
-bool bit(ll a,int i) { return a>>i&1; }
-vt<pii> wasd={{-1,0}, {0,-1}, {0,1}, {1,0}};
-vt<pii> WASD={{-1,0}, {0,-1}, {0,1}, {1,0}, {-1,-1}, {-1,1}, {1,-1}, {1,1}};
-vt<pii> knight={{-1,-1},{-1,1},{1,-1},{1,1}};
-vt<string> step ={"U", "L", "R", "D", "LU", "RU", "LD", "RD"};
-pri_qu<plp,vector<plp>,greater<plp>> pq;
+#define bit(n, i) (((n) >> (i)) & 1)
+#define db(x) cerr << #x << " = " << (x) << '\n';
 
-random_device rd;
-mt19937 mt(rd());
-ll rand_num(ll a,ll b)
-{
+ll rand_num(ll a,ll b) {
+    random_device rd;
+    mt19937 mt(rd());
     uniform_int_distribution<ll> dist(a,b);
     return dist(mt);
 }
 
-// ************ End Setting ************
+int mod=1e9+7; // MODDDDDDDDDDDDD
+
+template <typename T> void minimize(T &a, T b){ if(a>b)  a=b; }
+template <typename T> void maximize(T &a, T b){ if(a<b)  a=b; }
+template <typename T> void add(T &a, T b){ a+=b; if(a>=mod) a-=mod; }
+template <typename T> T gcd(T a, T b){
+    while(a!=0&&b!=0) if(a>b) a%=b; else b%=a; return a+b; }
+void read_file()
+{
+    freopen("sample.inp","r",stdin);
+    freopen("sample.out","w",stdout);
+}
+// =========> <3 VietHai1709 <3  <=========
 struct line{
-    ll m,b;
+    ll a,b;
     line(ll x=0,ll y=ooo)
     {
-        m=x; b=y;
+        a=x; b=y;
     }
-    ll eval(ll x)
+    ll get(ll x)
     {
-        return m*x+b;
+        return a*x+b;
     }
 };
-const int N=1e5+5;
-const int M=3001;
-// =========> Declaring variables <=======
-
-// =========> <3 Han Han <3  <=======
-ll s[N],last[M];
-vt<line> Line[M];
-bool bad(line u,line v,line w)
-{
-    return (double)(u.b-w.b)/(w.m-u.m)<=(double)(u.b-v.b)/(v.m-u.m);
-    //return (u.b-w.b)*(v.m-u.m)<=(u.b-v.b)*(w.m-u.m);
-}
-void add_line(int k,line L)
-{
-    while(Line[k].size()>=2 && bad(Line[k][Line[k].size()-2],Line[k][Line[k].size()-1],L))
-    {
-        Line[k].pop_back();
+struct ConvextHullTrick{
+    int n;
+    int flag;
+    vt<line> Line;
+    ConvextHullTrick(){
+        n=0;
+        flag=0;
+        Line.clear();
     }
-    Line[k].pb(L);
-}
-ll query(int k,ll x)
+    bool bad(line u,line v,line w)
+    {
+        return (double)(u.b-w.b)/(w.a-u.a)<=(double)(u.b-v.b)/(v.a-u.a);
+        //return (u.b-w.b)*(v.m-u.m)<=(u.b-v.b)*(w.m-u.m);
+    }
+    void add(line L)
+    {
+        while(n>=2 && bad(Line[n-2],Line[n-1],L))
+        {
+            Line.pop_back();
+            n--;
+        }
+        Line.pb(L);
+        n++;
+    }
+    ll query(ll x)
+    {
+        if(flag>n-1) flag=n-1;
+        while(flag+1<n && Line[flag].get(x)>Line[flag+1].get(x)) flag++;
+        return Line[flag].get(x);
+    }
+};
+void Minnnnnnn()
 {
-    int P=(int)Line[k].size();
-    if(last[k]>P-1) last[k]=P-1;
-    while(last[k]<P-1 && Line[k][last[k]].eval(x)>Line[k][last[k]+1].eval(x)) last[k]++;
-    return Line[k][last[k]].eval(x);
-}
-int main()
-{
-    FPTU;
-//    freopen("inp.txt", "r", stdin);
-//    freopen("out.txt","w",stdout);
-    memset(last,0,sizeof(last));
     int n,k;
     cin>>n>>k;
-    s[0]=0;
-    for(int i=1;i<=n;i++)
-    {
-        ll x;
-        cin>>x;
-        s[i]=s[i-1]+x;
+    vt<ll> s(n+1,0);
+    for(int i=1;i<=n;i++) {
+        cin>>s[i];
+        s[i]+=s[i-1];
     }
-    ll ans=0;
-    add_line(0,line(0,0));
-    for(int i=1;i<=n;i++)
-        for(int j=1;j<=min(i,k);j++)
-        {
-            ans=query(j-1,s[i])+s[i]*s[i];
-            add_line(j,line(-2*s[i],ans+s[i]*s[i]));
+    vt<vt<ll>> f(n+1,vt<ll>(k+1));
+    vt<ConvextHullTrick> myCHT(k+1,ConvextHullTrick());
+    myCHT[0].add(line(0,0));
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=min(i,k);j++){
+            f[i][j]= myCHT[j-1].query(s[i]) +s[i]*s[i];
+            myCHT[j].add(line(s[i]*-2,f[i][j]+s[i]*s[i]));
         }
+    }
+    cout<<f[n][k];
+}
 
-    cout<<ans;
-    cerr << "Time elapsed: " << TIME << " s.\n";
-    return 0;
+
+int main(){
     
-}
-
-
-// Gitchee gitchee goo means that I love you
-/* Idea:
-
-*/
-
-
-
-// ************ Create Tests ************
-
-void build_test()
-{
-    char x[]="out000.txt";
-    int num_test=30;
-    for(int ii=21;ii<=num_test;ii++)
+    FPTU; //fast
+    
+    //read_file();
+    
+    int __=1;
+    //cin>>__;
+    for(int _=1;_<=__;_++)
     {
-        string s=to_string(ii);
-        int c=5;
-        int u=(int)s.size()-1;
-        while(u>=0)
-        {
-            x[c--]=s[u--];
-        }
-        freopen(x, "w", stdout);
-       // *** opcode here ***
-        ll n,m;
-        n=rand_num(100000-100,100000);
-        m=rand_num(10000,n);
-        cout<<n<<' '<<m;
+        Minnnnnnn();
     }
+    cerr << "Time elapsed: " << TIME << " s.\n";
+
+    return 0;
 }
-/* Note:
-  
-*/
-
-
+//https://cses.fi/problemset/task/2086/
