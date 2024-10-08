@@ -81,9 +81,9 @@ void read_file()
     freopen("sample.out","w",stdout);
 }
 // =========> <3 VietHai1709 <3  <=========
-struct node{
+struct line{
     ll a,b;
-    node(ll x=0,ll y=ooo)
+    line(ll x=0,ll y=ooo)
     {
         a=x; b=y;
     }
@@ -96,12 +96,12 @@ struct LichaoTree{
     // get max => lower convexhull
     // get min => upper convexhull
 
-    vt<node> F;
+    vt<line> F;
     LichaoTree(int n){
         F.resize(n<<2);
     }
     
-    void add(int id,int l,int r,node cur)
+    void add(int id,int l,int r,line cur)
     {
         int mid=(l+r)>>1;
         bool lef = cur.get(l) < F[id].get(l);
@@ -111,6 +111,7 @@ struct LichaoTree{
         if(lef==mi) add(id*2+1,mid+1,r,cur);
         else add(id*2,l,mid,cur);
     }
+
     ll query(int id,int l,int r,ll x)
     {
         int mid=(l+r)>>1;
@@ -130,10 +131,10 @@ void Minnnnnnn()
     for(ll &i : b) cin>>i;
     int mx=1e6;
     LichaoTree myLichao(mx);
-    myLichao.add(1, 1, mx, node(x,0));
+    myLichao.add(1, 1, mx, line(x,0));
     for(int i=0;i<n;i++){
         f[i]=myLichao.query(1, 1, mx, a[i]);
-        myLichao.add(1, 1, mx, node(b[i],f[i]));
+        myLichao.add(1, 1, mx, line(b[i],f[i]));
     }
     cout<<f[n-1];
 }
@@ -141,7 +142,10 @@ void Minnnnnnn()
 
 int main(){
     
-    FPTU;  // read_file();
+    FPTU; //fast
+    
+    read_file();
+    
     int __=1;
     //cin>>__;
     for(int _=1;_<=__;_++)
