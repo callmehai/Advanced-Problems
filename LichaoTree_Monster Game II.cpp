@@ -1,84 +1,41 @@
-#include <algorithm>
-#include <bitset>
-#include <complex>
-#include <deque>
-#include <exception>
-#include <fstream>
-#include <functional>
-#include <iomanip>
-#include <ios>
-#include <iosfwd>
-#include <iostream>
-#include <istream>
-#include <iterator>
-#include <limits>
-#include <list>
-#include <locale>
-#include <map>
-#include <memory>
-#include <new>
-#include <numeric>
-#include <ostream>
-#include <queue>
-#include <set>
-#include <sstream>
-#include <stack>
-#include <stdexcept>
-#include <streambuf>
-#include <string>
-#include <typeinfo>
-#include <utility>
-#include <valarray>
-#include <vector>
- 
-#if __cplusplus >= 201103L
-#include <array>
-#include <atomic>
-#include <chrono>
-#include <codecvt>
-#include <condition_variable>
-#include <forward_list>
-#include <future>
-#include <initializer_list>
-#include <mutex>
-#include <random>
-#include <ratio>
-#include <regex>
-#include <scoped_allocator>
-#include <system_error>
-#include <thread>
+#pragma GCC optimize ("O3")
+
+//#incluse <bits/stdc++.h>
+
+#include <iostream>     // Input/output stream objects
+#include <fstream>      // File stream objects
+#include <sstream>      // String stream objects
+#include <iomanip>      // Input/output manipulators
+#include <string>       // String class and functions
+#include <vector>       // Dynamic array
+#include <list>         // Doubly linked list
+#include <set>          // Set container
+#include <map>          // Map container
+#include <queue>        // Queue container
+#include <stack>        // Stack container
+#include <algorithm>    // Algorithms on sequences (e.g., sort, find)
+#include <cmath>        // Mathematical functions
+#include <ctime>        // Date and time functions
+#include <cstdlib>      // General purpose functions (e.g., memory management)
+#include <cstring>      // C-style string functions
+#include <cctype>       // Character classification functions
+#include <cassert>      // Assert function for debugging
+#include <exception>    // Standard exceptions
+#include <functional>   // Function objects
+#include <iterator>     // Iterator classes
+#include <limits>       // Numeric limits
+#include <locale>       // Localization and internationalization
+#include <numeric>      // Numeric operations (e.g., accumulate)
+#include <random>       // Random number generators
+#include <stdexcept>    // Standard exception classes
+#include <typeinfo>     // Runtime type information
+#include <utility>      // Utility components (e.g., std::pair)
 #include <tuple>
-#include <typeindex>
-#include <type_traits>
-#include <unordered_map>
-#include <unordered_set>
-#endif
- 
-#if __cplusplus >= 201402L
-#include <shared_mutex>
-#include <cstring>
-#endif
- 
-#if __cplusplus >= 202002L
-#include <barrier>
-#include <bit>
-#include <compare>
-#include <concepts>
-#if __cpp_impl_coroutine
-# include <coroutine>
-#endif
-#include <latch>
-#include <numbers>
-#include <span>
-#include <semaphore>
-#include <version>
-#endif
- 
-#if __cplusplus > 202002L
-#include <spanstream>
-#endif
+#include <cstdio>
+#include <bitset>
+
 using namespace std;
- 
+
 // ************ Setting up  ************
 #define FPTU ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 #define TIME  (1.0 * clock() / CLOCKS_PER_SEC)
@@ -86,129 +43,113 @@ using namespace std;
 #define pii pair<int,int>
 #define pip pair<int,pii>
 #define ppi pair<pii,int>
-#define ll long long
+#define ll  long long
 #define ull unsigned long long
 #define usi unsigned int
 #define pll pair<ll,ll>
 #define plp pair<ll,pll>
 #define ppl pair<pll,ll>
+#define ppp pair<pii,pii>
 #define oo 1000111000
 #define ooo 1000111000111000111
+#define inf 0x3f //4557430888798830399
 #define fi first
 #define se second
-#define pri_qu priority_queue
 #define vt vector
 #define pb push_back
 #define all(arr) arr.begin(),arr.end()
-void build_test();
-template <typename T> void minimize(T &a, T b){ if(a>b) a=b;}
-template <typename T> void maximize(T &a, T b){ if(a<b) a=b;}
-bool bit(ll a,int i) { return a>>i&1; }
-vt<pii> wasd={{-1,0}, {0,-1}, {0,1}, {1,0}};
-vt<pii> WASD={{-1,0}, {0,-1}, {0,1}, {1,0}, {-1,-1}, {-1,1}, {1,-1}, {1,1}};
-vt<pii> knight={{-1,-1},{-1,1},{1,-1},{1,1}};
-vt<string> step ={"U", "L", "R", "D", "LU", "RU", "LD", "RD"};
-pri_qu<plp,vector<plp>,greater<plp>> pq;
- 
-random_device rd;
-mt19937 mt(rd());
-ll rand_num(ll a,ll b)
-{
+#define bit(n, i) (((n) >> (i)) & 1)
+#define db(x) cerr << #x << " = " << (x) << '\n';
+
+ll rand_num(ll a,ll b) {
+    random_device rd;
+    mt19937 mt(rd());
     uniform_int_distribution<ll> dist(a,b);
     return dist(mt);
 }
- 
-// ************ End Setting ************
-struct line{
-    ll m,b;
-    line(ll x=0,ll y=ooo)
+
+int mod=1e9+7; // MODDDDDDDDDDDDD
+
+template <typename T> void minimize(T &a, T b){ if(a>b)  a=b; }
+template <typename T> void maximize(T &a, T b){ if(a<b)  a=b; }
+template <typename T> void add(T &a, T b){ a+=b; if(a>=mod) a-=mod; }
+template <typename T> T gcd(T a, T b){
+    while(a!=0&&b!=0) if(a>b) a%=b; else b%=a; return a+b; }
+void read_file()
+{
+    freopen("sample.inp","r",stdin);
+    freopen("sample.out","w",stdout);
+}
+// =========> <3 VietHai1709 <3  <=========
+struct node{
+    ll a,b;
+    node(ll x=0,ll y=ooo)
     {
-        m=x; b=y;
+        a=x; b=y;
     }
-    ll eval(ll x)
+    ll get(ll x)
     {
-        return m*x+b;
+        return a*x+b;
     }
 };
-const int N=2e5+5;
-const int M=1e6+5;
-// =========> Declaring variables <=======
- 
-// =========> <3 Han Han <3  <=======
-ll S,s[N],f[N],dp[N],last=0;
-line F[M*4];
-void add_line(int id,int l,int r,line L)
-{
-    int mid=(l+r)>>1;
-    bool lef = L.eval(l) < F[id].eval(l);
-    bool mi = L.eval(mid) < F[id].eval(mid);
-    if(mi) swap(F[id],L);
-    if(l==r) return;
-    if(lef==mi) add_line(id*2+1,mid+1,r,L);
-    else add_line(id*2,l,mid,L);
-}
-ll query(int id,int l,int r,ll x)
-{
-    int mid=(l+r)>>1;
-    if(l==r) return F[id].eval(x);
-    ll ans=F[id].eval(x);
-    if(x<=mid) minimize(ans, query(id*2,l,mid,x));
-    else minimize(ans, query(id*2+1,mid+1,r,x));
-    return ans;
-}
-int main()
-{
-    FPTU;
-//    freopen("inp.txt", "r", stdin);
-//    freopen("out.txt","w",stdout);
-    int n;
-    cin>>n>>S;
-    for(int i=1;i<=n;i++) cin>>s[i];
-    for(int i=1;i<=n;i++) cin>>f[i];
-    add_line(1,1,M,line(S,0));
-    for(int i=1;i<=n;i++)
-    {
-        dp[i]=query(1,1,M,s[i]);
-        add_line(1,1,M,line(f[i],dp[i]));
+struct LichaoTree{
+    // get max => lower convexhull
+    // get min => upper convexhull
+
+    vt<node> F;
+    LichaoTree(int n){
+        F.resize(n<<2);
     }
- 
-    cout<<dp[n];
-    cerr << "Time elapsed: " << TIME << " s.\n";
-    return 0;
     
-}
- 
- 
-// Gitchee gitchee goo means that I love you
-/* Idea:
- 
-*/
- 
- 
- 
-// ************ Create Tests ************
- 
-void build_test()
-{
-    char x[]="out000.txt";
-    int num_test=30;
-    for(int ii=21;ii<=num_test;ii++)
+    void add(int id,int l,int r,node cur)
     {
-        string s=to_string(ii);
-        int c=5;
-        int u=(int)s.size()-1;
-        while(u>=0)
-        {
-            x[c--]=s[u--];
-        }
-        freopen(x, "w", stdout);
-       // *** opcode here ***
-        ll n,m;
-        n=rand_num(100000-100,100000);
-        m=rand_num(10000,n);
-        cout<<n<<' '<<m;
+        int mid=(l+r)>>1;
+        bool lef = cur.get(l) < F[id].get(l);
+        bool mi = cur.get(mid) < F[id].get(mid);
+        if(mi) swap(F[id],cur);
+        if(l==r) return;
+        if(lef==mi) add(id*2+1,mid+1,r,cur);
+        else add(id*2,l,mid,cur);
     }
+    ll query(int id,int l,int r,ll x)
+    {
+        int mid=(l+r)>>1;
+        if(l==r) return F[id].get(x);
+        ll ans=F[id].get(x);
+        if(x<=mid) minimize(ans, query(id*2,l,mid,x));
+        else minimize(ans, query(id*2+1,mid+1,r,x));
+        return ans;
+    }
+};
+void Minnnnnnn()
+{
+    int n,x;
+    cin>>n>>x;
+    vt<ll> a(n),b(n),f(n);
+    for(ll &i : a) cin>>i;
+    for(ll &i : b) cin>>i;
+    int mx=1e6;
+    LichaoTree myLichao(mx);
+    myLichao.add(1, 1, mx, node(x,0));
+    for(int i=0;i<n;i++){
+        f[i]=myLichao.query(1, 1, mx, a[i]);
+        myLichao.add(1, 1, mx, node(b[i],f[i]));
+    }
+    cout<<f[n-1];
 }
-/* Note:
-  
-*/
+
+
+int main(){
+    
+    FPTU;  // read_file();
+    int __=1;
+    //cin>>__;
+    for(int _=1;_<=__;_++)
+    {
+        Minnnnnnn();
+    }
+    cerr << "Time elapsed: " << TIME << " s.\n";
+
+    return 0;
+}
+//https://cses.fi/problemset/task/2085/
