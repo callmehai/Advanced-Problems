@@ -160,11 +160,16 @@ struct ConvextHullTrick{
         return Line[flag].get(x);
     }
 };
+
+struct node{
+    int tag;
+    line L;
+};
 struct LichaoTree{
     // get max => lower convexhull
     // get min => upper convexhull
 
-    vt<line> F;
+    vt<node> F;
     int n;
     LichaoTree(int _){
         n=_;
@@ -174,13 +179,21 @@ struct LichaoTree{
         F.clear();
         F.resize(n<<2);
     }
+    void down(int p) {
+        if(F[p].tag) {
+            F[p*2]={1,{0,ooo}};
+            F[p*2+1]={1,{0,ooo}};
+            F[p].tag=0;
+        }
+    }
     void add(int id,int l,int r,line cur)
     {
         int mid=(l+r)>>1;
-        bool lef = cur.get(l) < F[id].get(l);
-        bool mi = cur.get(mid) < F[id].get(mid);
-        if(mi) swap(F[id],cur);
+        bool lef = cur.get(l) < F[id].L.get(l);
+        bool mi = cur.get(mid) < F[id].L.get(mid);
+        if(mi) swap(F[id].L,cur);
         if(l==r) return;
+        down(id);
         if(lef==mi) add(id*2+1,mid+1,r,cur);
         else add(id*2,l,mid,cur);
     }
@@ -188,8 +201,9 @@ struct LichaoTree{
     ll query(int id,int l,int r,ll x)
     {
         int mid=(l+r)>>1;
-        if(l==r) return F[id].get(x);
-        ll ans=F[id].get(x);
+        if(l==r) return F[id].L.get(x);
+        down(id);
+        ll ans=F[id].L.get(x);
         if(x<=mid) minimize(ans, query(id*2,l,mid,x));
         else minimize(ans, query(id*2+1,mid+1,r,x));
         return ans;
