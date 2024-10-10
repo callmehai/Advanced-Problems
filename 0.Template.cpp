@@ -118,6 +118,15 @@ int phi(int n) {
     }
     return res;
 }
+int phi[5000001];
+void EulerPhi(int N)
+{
+    for(ull i=0;i<=N;i++) phi[i]=i;
+    for(ull i=2;i<=N;i++)
+        if(phi[i]==i)
+            for(ull j=i;j<=N;j+=i)
+                phi[j]-=phi[j]/i;
+}
 struct line{
     ll a,b;
     line(ll x=0,ll y=ooo)
