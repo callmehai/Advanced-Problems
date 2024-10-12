@@ -1,0 +1,87 @@
+
+#include <bits/stdc++.h>
+using namespace std;
+
+#define ll long long 
+
+ll fact[21];
+
+void CalcFact()
+{
+	fact[0] = 1;
+	for (int i = 1; i <= 20; i++)
+		fact[i] = fact[i - 1] * i;
+}
+
+void solve(string str, ll n)
+{
+
+	int len = str.size();
+
+	int freq[26] = { 0 };
+	
+	for (int i = 0; i < len; i++)
+		freq[str[i] - 'a']++;
+
+	string ans=str;
+	for(int i=0;i<len;i++) ans[i]='#';
+
+	int k = 0;
+
+    ll sum = 0;// current permutation
+    
+    
+	while (k<len) {
+
+        bool ok=0;
+
+		for (int i = 0; i < 26; i++) {
+		    
+			if (freq[i] == 0) continue;
+
+			freq[i]--;
+
+			ll xsum = fact[len - 1 - k];// number of permutation for suffix string if ans[k]=i
+			
+			for (int j = 0; j < 26; j++)
+				xsum /= fact[freq[j]]; 
+				
+
+			if (sum + xsum>= n) { // last permutation > n => put i in ans[k]
+				ans[k++] = i + 'a';
+				ok=1;
+				break;
+			}
+           
+            
+            sum+=xsum; //skip "xsum" permutation, try another character
+			freq[i]++;  // return character i back to frequence[i]
+		}
+		//cout<<ans<<'\n';
+		
+		// cannot find any character to put in ans[k]
+		if(!ok){
+            cout<<"Impossible\n";
+            return;
+		}
+	}
+
+	cout << ans<<'\n';
+}
+
+int main()
+{
+    int t;
+    cin>>t;
+    CalcFact();
+    for(int i=1;i<=t;i++)
+    {
+    	string s;
+    	ll n;
+    	cin>>s>>n;
+    	cout << "Case " << i << ": ";
+    
+    	solve(s, n);
+    }
+	return 0;
+}
