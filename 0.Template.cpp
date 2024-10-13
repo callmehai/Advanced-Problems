@@ -1,6 +1,6 @@
 #pragma GCC optimize ("O3")
 
-//#incluse <bits/stdc++.h>
+//#include <bits/stdc++.h>
 
 #include <iostream>     // Input/output stream objects
 #include <fstream>      // File stream objects
