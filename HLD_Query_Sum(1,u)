@@ -1,0 +1,261 @@
+#pragma GCC optimize ("O3")
+
+//#include <bits/stdc++.h>
+
+#include <iostream>     // Input/output stream objects
+#include <fstream>      // File stream objects
+#include <sstream>      // String stream objects
+#include <iomanip>      // Input/output manipulators
+#include <string>       // String class and functions
+#include <vector>       // Dynamic array
+#include <list>         // Doubly linked list
+#include <set>          // Set container
+#include <map>          // Map container
+#include <queue>        // Queue container
+#include <stack>        // Stack container
+#include <algorithm>    // Algorithms on sequences (e.g., sort, find)
+#include <cmath>        // Mathematical functions
+#include <ctime>        // Date and time functions
+#include <cstdlib>      // General purpose functions (e.g., memory management)
+#include <cstring>      // C-style string functions
+#include <cctype>       // Character classification functions
+#include <cassert>      // Assert function for debugging
+#include <exception>    // Standard exceptions
+#include <functional>   // Function objects
+#include <iterator>     // Iterator classes
+#include <limits>       // Numeric limits
+#include <locale>       // Localization and internationalization
+#include <numeric>      // Numeric operations (e.g., accumulate)
+#include <random>       // Random number generators
+#include <stdexcept>    // Standard exception classes
+#include <typeinfo>     // Runtime type information
+#include <utility>      // Utility components (e.g., std::pair)
+#include <tuple>
+#include <cstdio>
+#include <bitset>
+
+using namespace std;
+
+// ************ Setting up  ************
+#define FPTU ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define TIME  (1.0 * clock() / CLOCKS_PER_SEC)
+#define BUG(x) {cerr << #x << " = " << x << endl;}
+#define pii pair<int,int>
+#define pip pair<int,pii>
+#define ppi pair<pii,int>
+#define ll  long long
+#define ull unsigned long long
+#define usi unsigned int
+#define pll pair<ll,ll>
+#define plp pair<ll,pll>
+#define ppl pair<pll,ll>
+#define ppp pair<pii,pii>
+#define oo 1000111000
+#define ooo 1000111000111000111
+#define inf 0x3f //4557430888798830399
+#define fi first
+#define se second
+#define vt vector
+#define pb push_back
+#define all(arr) arr.begin(),arr.end()
+#define bit(n, i) (((n) >> (i)) & 1)
+#define db(x) cerr << #x << " = " << (x) << '\n';
+
+ll rand_num(ll a,ll b) {
+    random_device rd;
+    mt19937 mt(rd());
+    uniform_int_distribution<ll> dist(a,b);
+    return dist(mt);
+}
+
+int mod=1e9+7; // MODDDDDDDDDDDDD
+
+template <typename T> void minimize(T &a, T b){ if(a>b)  a=b; }
+template <typename T> void maximize(T &a, T b){ if(a<b)  a=b; }
+template <typename T> void add(T &a, T b){ a+=b; if(a>=mod) a-=mod; }
+template <typename T> T gcd(T a, T b)
+{
+    while(a!=0&&b!=0)
+    {
+        if(a>b) a%=b;
+        else b%=a;
+    }
+    return a+b;
+}
+
+
+void read_file()
+{
+    freopen("sample.inp","r",stdin);
+    freopen("sample.out","w",stdout);
+}
+// =========> <3 VietHai1709 <3  <=========
+struct SegmentTree{
+    
+    vt<ll> A;
+    int n;
+    
+    void newSegmentTree(int _){
+        n=_;
+        A.resize(n<<2);
+    }
+
+    void up(int id,int l,int r,int u,ll val)
+    {
+        //cout<<l<<' '<<r<<' '<<u<<' '<<val<<'\n';
+
+        if(l>u || r<u) return;
+        if(l == r){
+            A[id]=val;
+            return;
+        }
+        int mid=(l+r)>>1;
+        if(u<=mid) up(id*2,l,mid,u,val);
+        else up(id*2+1,mid+1,r,u,val);
+        A[id]=A[id*2]+A[id*2+1];
+    }
+    ll get(int id,int l,int r,int u,int v)
+    {
+        if(l>v||r<u) return 0;
+        if(l>=u&&r<=v)
+        {
+            return A[id];
+        }
+        int mid=(l+r)/2;
+        return get(id*2,l,mid,u,v)+get(id*2+1,mid+1,r,u,v);
+        
+    }
+};
+struct HLD{
+    
+    int n;
+    int cnt_chain;
+    int size;
+    vt<vt<int>> Edge;
+    vt<int> pa;
+    vt<int> child;
+    vt<int> chain;
+    vt<int> head;
+    vt<int> pos;
+    vt<ll> weight;
+    SegmentTree myTree;
+    HLD(int _){
+        n=_;
+        cnt_chain=0;
+        size=0;
+        Edge.resize(n+1);
+        pa.resize(n+1);
+        child.resize(n+1);
+        chain.resize(n+1);
+        head.resize(n+1,0);
+        pos.resize(n+1);
+        weight.resize(n+1);
+        myTree.newSegmentTree(n);
+
+    }
+    void dfs(int u){
+        child[u]=1;
+        for(int v:Edge[u]) if(v!=pa[u]){
+            pa[v]=u;
+            dfs(v);
+            child[u]+=child[v];
+        }
+    }
+    void heavy_light(int u){
+        if(head[cnt_chain]==0) head[cnt_chain]=u;
+        chain[u]=cnt_chain;
+        pos[u]=++size;
+        
+        int min_subtree=-1;
+        for(int v:Edge[u]) if(v!=pa[u]){
+            if(min_subtree == -1 || child[min_subtree] > child[v]){
+                min_subtree=v;
+            }
+        }
+        
+        if(min_subtree==-1) return;
+        
+        heavy_light(min_subtree);
+        
+        for(int v:Edge[u]) if(v!=pa[u] && v!=min_subtree){
+            cnt_chain++;
+            heavy_light(v);
+        }
+    }
+    
+    void build(){
+        for(int i=1;i<=n;i++) {
+            cin>>weight[i];
+        }
+        for(int i=1;i<n;i++){
+            int u,v;
+            cin>>u>>v;
+            Edge[u].pb(v);
+            Edge[v].pb(u);
+        }
+        pa[1]=1;
+        dfs(1);
+        heavy_light(1);
+        for(int i=1;i<=n;i++){
+            myTree.up(1, 1, n, pos[i], weight[i]);
+        }
+        
+    }
+    void up(int u,ll val){
+        myTree.up(1, 1, n, pos[u], val);
+    }
+    ll get(int u){
+        ll res=0;
+        while(true){
+            
+            res += myTree.get(1, 1, n, pos[head[chain[u]]], pos[u]);
+            
+            if(head[chain[u]]==1) break;
+            
+            u=pa[head[chain[u]]];
+            
+            if(u==1) {
+                res += myTree.get(1, 1, n, 1, 1);
+                break;
+            }
+            
+        }
+        return res;
+    }
+};
+void Minnnnnnn()
+{
+    int n,q;
+    cin>>n>>q;
+    HLD myHLD(n);
+    myHLD.build();
+    
+    while(q--){
+        int type;
+        cin>>type;
+        if(type==1){
+            int u;
+            ll x;
+            cin>>u>>x;
+            myHLD.up(u,x);
+        }
+        else{
+            int u;
+            cin>>u;
+            cout<<myHLD.get(u)<<'\n';
+        }
+    }
+}
+int main(){
+    FPTU; read_file();
+    int Test_case=1;
+    //cin>>Test_case;
+    while(Test_case--)
+    {
+//        cout<<"Case #"<<_<<": ";
+        Minnnnnnn();
+    }
+    cerr << "Time elapsed: " << TIME << " s.\n";
+    return 0;
+}
+//https://codeforces.com/group/2T8zw35X85/contest/397851/problem/N
